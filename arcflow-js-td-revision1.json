@@ -17,11 +17,11 @@
             "secrets": [
                 {
                     "name": "FLOWISE_USERNAME",
-                    "valueFrom": "arn:aws:secretsmanager:us-east-2:211125296415:secret:prod/arcflow-js-HbS6Ga/dashboard_username"
+                    "valueFrom": "arn:aws:secretsmanager:us-east-2:211125296415:secret:prod/arcflow-js-HbS6Ga:dashboard_username::"
                 },
                 {
                     "name": "FLOWISE_PASSWORD",
-                    "valueFrom": "arn:aws:secretsmanager:us-east-2:211125296415:secret:prod/arcflow-js-HbS6Ga/dashboard_password"
+                    "valueFrom": "arn:aws:secretsmanager:us-east-2:211125296415:secret:prod/arcflow-js-HbS6Ga:dashboard_password::"
                 }
             ],
             "essential": true,
