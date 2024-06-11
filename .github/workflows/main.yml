@@ -1,49 +1,67 @@
-name: Node CI
+name: ARCflow-js ECS Deploy
+
 on:
-    push:
-        branches:
-            - main
-    pull_request:
-        branches:
-            - '*'
+  push:
+    branches:
+      - main
+
+# This section is required for fetching a JWT token
 permissions:
-    contents: read
+  id-token: write
+
+env:
+  AWS_REGION: us-east-2
+  ECR_REPOSITORY: arcflow-js
+  ECS_SERVICE: arcflow-js-svc
+  ECS_CLUSTER: arcflow-js
+  ECS_TASK_DEFINITION: arcflow-js-td-revision1.json
+  CONTAINER_NAME: arcflow-js-container
+
 jobs:
-    build:
-        strategy:
-            matrix:
-                platform: [ubuntu-latest]
-                node-version: [18.15.0]
-        runs-on: ${{ matrix.platform }}
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: arcflow-test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
+        with:
+          role-to-assume: arn:aws:iam::211125296415:role/github
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
         env:
-            PUPPETEER_SKIP_DOWNLOAD: true
-        steps:
-            - uses: actions/checkout@v4
-            - uses: pnpm/action-setup@v3
-              with:
-                  version: 9.0.4
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v4
-              with:
-                  node-version: ${{ matrix.node-version }}
-                  check-latest: false
-                  cache: 'pnpm'
-            - run: npm i -g pnpm
-            - run: pnpm install
-            - run: ./node_modules/.bin/cypress install
-            - run: pnpm lint
-            - run: pnpm build
-            - name: Install dependencies
-              uses: cypress-io/github-action@v6
-              with:
-                  working-directory: ./
-                  runTests: false
-            - name: Cypress test
-              uses: cypress-io/github-action@v6
-              with:
-                  install: false
-                  working-directory: packages/server
-                  start: pnpm start
-                  wait-on: 'http://localhost:3000'
-                  wait-on-timeout: 120
-                  browser: chrome
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          # Build a docker container and
+          # push it to ECR so that it can
+          # be deployed to ECS.
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
