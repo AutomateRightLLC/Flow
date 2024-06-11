@@ -1,4 +1,4 @@
-name: ARCflow-js ECS Deploy
+name: Flowise-TMP_NAME ECS Deploy
 
 on:
   push:
