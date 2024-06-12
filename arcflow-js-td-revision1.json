@@ -14,14 +14,43 @@
                     "appProtocol": "http"
                 }
             ],
+            "environment": [
+                {
+                    "name": "OVERRIDE_DATABASE",
+                    "value": "false"
+                },
+                {
+                    "name": "DATABASE_PORT",
+                    "value": "5432"
+                },
+                {
+                    "name": "PGSSLMODE",
+                    "value": "require"
+                },
+                {
+                    "name": "DATABASE_TYPE",
+                    "value": "postgres"
+                }
+            ],
             "secrets": [
                 {
-                    "name": "ARCFLOW_SECRETS",
-                    "valueFrom": "arn:aws:secretsmanager:us-east-2:211125296415:secret:prod/arcflow-js-HbS6Ga"
+                    "name": "DATABASE_HOST",
+                    "valueFrom": "arn:aws:ssm:us-east-2:211125296415:parameter/arcflow-demo-db-host"
+                },
+                {
+                    "name": "DATABASE_NAME",
+                    "valueFrom": "arn:aws:ssm:us-east-2:211125296415:parameter/arcflow-demo-db-name"
+                },
+                {
+                    "name": "DATABASE_USER",
+                    "valueFrom": "arn:aws:ssm:us-east-2:211125296415:parameter/arcflow-demo-db-username"
+                },
+                {
+                    "name": "DATABASE_PASSWORD",
+                    "valueFrom": "arn:aws:ssm:us-east-2:211125296415:parameter/arcflow-demo-db-password"
                 }
             ],
             "essential": true,
-            "environment": [],
             "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
