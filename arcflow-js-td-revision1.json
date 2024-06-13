@@ -52,6 +52,15 @@
                 {
                     "name": "DATABASE_PASSWORD",
                     "valueFrom": "arn:aws:ssm:us-east-2:211125296415:parameter/arcflow-demo-db-password"
+                },
+
+                {
+                    "name": "FLOWISE_USERNAME",
+                    "valueFrom": "arn:aws:ssm:us-east-2:211125296415:parameter/arcflow-demo-dashboard-username"
+                },
+                {
+                    "name": "FLOWISE_PASSWORD",
+                    "valueFrom": "arn:aws:ssm:us-east-2:211125296415:parameter/arcflow-demo-dashboard-password"
                 }
             ],
             "essential": true,
