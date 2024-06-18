@@ -2,18 +2,18 @@
 $paper: #ffffff;
 
 // primary
-$primaryLight: #e3f2fd;
-$primaryMain: #2196f3;
-$primaryDark: #1e88e5;
-$primary200: #90caf9;
-$primary800: #1565c0;
+$primaryMain: #000048;
+$primaryLight: lighten($primaryMain, 40%);
+$primaryDark: darken($primaryMain, 20%);
+$primary200: lighten($primaryMain, 80%);
+$primary800: darken($primaryMain, 10%);
 
 // secondary
-$secondaryLight: #ede7f6;
-$secondaryMain: #673ab7;
-$secondaryDark: #5e35b1;
-$secondary200: #b39ddb;
-$secondary800: #4527a0;
+$secondaryMain: #3B72CE;
+$secondaryLight: lighten($secondaryMain, 40%);
+$secondaryDark: darken($secondaryMain, 20%);
+$secondary200: lighten($secondaryMain, 10%);
+$secondary800: darken($secondaryMain, 10%);
 
 // success Colors
 $successLight: #cdf5d8;
