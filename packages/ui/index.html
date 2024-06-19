@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Flowise - Low-code LLM apps builder</title>
+        <title>cognizant arcflow</title>
         <link rel="icon" href="favicon.ico" />
         <!-- Meta Tags-->
         <meta charset="utf-8" />
@@ -41,6 +41,21 @@
             if (global === undefined) {
                 var global = window
             }
+        </script>
+
+        <div id="change-title">
+            <form id="title-form">
+                <input type="text" id="new-title" placeholder="Set title" />
+                <button type="submit">Set</button>
+            </form>
+        </div>
+
+        <script>
+            document.getElementById('title-form').addEventListener('submit', function (event) {
+                event.preventDefault()
+                var newTitle = document.getElementById('new-title').value
+                document.title = newTitle
+            })
         </script>
     </body>
 </html>

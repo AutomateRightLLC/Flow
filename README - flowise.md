@@ -1,9 +1,3 @@
-Cognizant Arcflow
-
-This is a fork of Flowise. This is also a branch specific to Cognizant and contains files and changes specific to the Cognizant implementation of Flowise.
-
-Please contact edward.meier@cognizant.com
-
 <!-- markdownlint-disable MD030 -->
 
 <img width="100%" src="https://github.com/FlowiseAI/Flowise/blob/main/images/flowise.png?raw=true"></a>
@@ -16,7 +10,7 @@ Please contact edward.meier@cognizant.com
 [![GitHub star chart](https://img.shields.io/github/stars/FlowiseAI/Flowise?style=social)](https://star-history.com/#FlowiseAI/Flowise)
 [![GitHub fork](https://img.shields.io/github/forks/FlowiseAI/Flowise?style=social)](https://github.com/FlowiseAI/Flowise/fork)
 
-English | [中文](./i18n/README-ZH.md) | [日本語](./i18n/README-JA.md) | [한국어](./i18n/README-KR.md)
+English | [中文](./README-ZH.md) | [日本語](./README-JA.md) | [한국어](./README-KR.md)
 
 <h3>Drag & drop UI to build your customized LLM flow</h3>
 <a href="https://github.com/FlowiseAI/Flowise">

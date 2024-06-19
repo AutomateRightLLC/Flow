@@ -1,3 +1,7 @@
+# local data
+.flowise
+settings.json
+
 # editor
 .idea
 .vscode
