@@ -4,7 +4,7 @@ FROM node:20-alpine as build
 USER root
 
 # Skip downloading Chrome for Puppeteer (saves build time)
-ENV PUPPETEER_SKIP_DOWNLOAD=true
+ENV PUPPETEER_SKIP_DOWNLOAD=false
 
 # Install latest Flowise globally (specific version can be set: flowise@1.0.0)
 RUN npm install -g flowise
